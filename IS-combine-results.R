@@ -162,6 +162,8 @@ fancy_scientific_num <- function(l) {
 	parse(text=out) 
 } 
 
+if(!dir.exists('plots')) dir.create('plots',recursive=TRUE)
+
 png(paste0('plots/',Sys.Date(),'_ESS_error_log.png'),height=450,width=510,pointsize=19,type='cairo')
 ggplot(ofits) + geom_point(aes(x=effective_ss, y=errors_IS_abs,color=draw_type),cex=1.1) +
 	scale_y_log10(breaks=c(.1,.05,.01,.005,.001)) +

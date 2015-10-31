@@ -22,7 +22,7 @@ crop <- args[4]
 
 setwd(save_path)
 
-#Highlight posterior files
+#Highlight posterior files of interest
 files<-dir()[grep('posterior',dir())]
 files<- files[!grepl('concatenated_posterior',files)]
 files<- files[!grepl('full_posterior_corner',files)]

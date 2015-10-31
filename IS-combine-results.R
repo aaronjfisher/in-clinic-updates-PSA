@@ -1,3 +1,5 @@
+# Combine results from IS-fitting, generate plots of performance
+
 library(dplyr)
 library(ggplot2)
 
@@ -42,26 +44,23 @@ nsim <- dim(of1<-of$eta_hat_means)[1]
 eta_jags1<-colMeans(of$eta_hat_means[1:nsim <  nsim/2,])
 eta_jags2<-colMeans(of$eta_hat_means[1:nsim >= nsim/2,])
 quantile(abs(eta_jags1-eta_jags2),prob=c(.5,.9,.99,1))
-	# Note - from "two" MCMC samples the concordance is very high. About 10 times higher than what we get with IS.
+	# Note - from two subsets of the MCMC sample, the concordance is very high.
+	# About 10 times higher than what we get with IS.
 #############
 
 
 #############
 # Combine results from parallel jobs
 
-load(paste0(batch_path,'/2015-10-16_seed_101_IOP_BX-TRUE_IOP_SURG-TRUE_P-5e+06_online_fit_results.RData')) #small & dynamic matrices
-
-
 files <- dir(batch_path)
-fitfiles <- files[grep('online',files)]
+
+load(files[grep('out-of-sample_fit_small_dynamic',files)])
 
 bigAll <- data.frame()
-bigfiles <- files[grep('big',files)]
+bigfiles <- files[grep('out-of-sample_fit_big',files)]
 for(i in 1:length(bigfiles)){
-
 	big_i <- readRDS(paste(batch_path,bigfiles[i],sep='/'))
 	bigAll <- rbind(bigAll,big_i)
-
 }
 bigAll <- bigAll[order(bigAll$subj),]
 as.tbl(bigAll)
@@ -82,7 +81,7 @@ ofits<-mutate(ofits, errors_ZW_abs = sqrt((etas_jags-etas_ZW)^2) )
 ofits<-mutate(ofits, errors_IS_abs = sqrt((etas_jags-etas_IS)^2) )
 ofits<-mutate(ofits, errors_ZW_abs = sqrt((etas_jags-etas_ZW)^2) )
 
-# saveRDS(ofits,file=paste0(batch_path,'/ISfitsConcatenated.rds'))
+saveRDS(ofits,file=paste0(batch_path,'/ISfitsConcatenated.rds'))
 # ofits<-readRDS(paste0(batch_path,'/ISfitsConcatenated.rds'))
 #############
 

@@ -10,6 +10,8 @@
 # Generate particles or candidate draws for the posterior for each subject. (`gen_particles`)
 # These particles are weighted or accepted/rejected to get an estimated posterior for each subject (`posteriors_all_subjects`).  
 # All new subjects share the same candidate draws, but have different weights (for importance sampling (IS)) or have different values accepted (for acceptance/rejection sampling (RS)).
+# Try with a small number of proposals (`small`) a large number (`big`) 
+# or a dynamically chosen number, starting small and growing as needed (`dynamic`).
 # Compare results to assess performance.
 #########################
 
@@ -143,7 +145,7 @@ if(taskID==1){
 	save('seed', 'n_reps','posterior_path',
 		'small',
 		'dynamic',
-		file=paste0(batch_path,Sys.Date(),'_seed_',seed,'_IOP_BX-',IOP_BX,'_IOP_SURG-',IOP_SURG,'_P-',P,'_online_fit_results.RData'))
+		file=paste0(batch_path,Sys.Date(),'_seed_',seed,'_P-',P,'_out-of-sample_fit_small_dynamic.RData'))
 }
 
 if(taskID>1){
@@ -165,5 +167,5 @@ if(taskID>1){
 		)
 
 	saveRDS(big,
-		file=paste0(batch_path,Sys.Date(),'_seed_',seed,'_IOP_BX-',IOP_BX,'_IOP_SURG-',IOP_SURG,'_P-',P,'_online_fit_big_taskID-',taskID,'.rds'))
+		file=paste0(batch_path,Sys.Date(),'_seed_',seed,'_IOP_BX-',IOP_BX,'_IOP_SURG-',IOP_SURG,'_P-',P,'_out-of-sample_fit_big_taskID-',taskID,'.rds'))
 }

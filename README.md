@@ -18,7 +18,7 @@ This will ultimately result in plots being saved to the `plots` folder.
 #### Files
 * `run-MCMC-IS.sh` - run the pipeline for MCMC and for IS
 * `call-jags-cluster.R` - run MCMC using jags. This function calls the script
-    - call-jags-functions-setup.R, which in turn calls either
+    - `call-jags-functions-setup.R`, which in turn calls either
         + `model-for-jags-IOP_BX-IOP_SURG.txt`,
         + `model-for-jags-NIOP_BX-IOP_SURG.txt`,
         + `model-for-jags-IOP_BX-NIOP_SURG.txt`, or
